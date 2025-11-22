@@ -4,6 +4,19 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib.pyplot as plt
 sns.set(style="whitegrid")
+import os
+
+# Create 'images' folder automatically if not exists
+# Ensure 'images' is a real folder
+if not os.path.exists("images"):
+    os.mkdir("images")
+
+# Helper function to save plots
+def save_fig(name):
+    path = f"images/{name}.png"
+    plt.savefig(path, dpi=300, bbox_inches='tight')
+    print(f"Saved: {path}")
+
 
 
 # Load data
@@ -79,6 +92,8 @@ plt.xlabel("Total Amount Spent")
 plt.ylabel("Category")
 plt.tight_layout()
 plt.show()
+save_fig("total_spending_by_category")
+
 
 #pai chart - payment method
 plt.figure(figsize=(6,6))
@@ -86,6 +101,8 @@ df['preferred_payment_method'].value_counts().plot.pie(autopct='%1.1f%%')
 plt.title("Preferred Payment Method")
 plt.ylabel("")
 plt.show()
+save_fig("preferred_payment_method")
+
 
 #histogram - monthly income
 plt.figure(figsize=(8,5))
@@ -94,6 +111,8 @@ plt.title("Monthly Income Distribution")
 plt.xlabel("Income")
 plt.tight_layout()
 plt.show()
+save_fig("income_distribution")
+
 
 #scatter plot - income vs total expenses
 plt.figure(figsize=(7,5))
@@ -103,6 +122,8 @@ plt.xlabel("Total Income")
 plt.ylabel("Total Expenses")
 plt.tight_layout()
 plt.show()
+save_fig("income_vs_expenses")
+
 
 #heatmap - corrilation
 numeric_df = df.select_dtypes(include=['int64', 'float64'])
@@ -112,6 +133,8 @@ sns.heatmap(numeric_df.corr(), annot=True, cmap="coolwarm", fmt=".2f")
 plt.title("Correlation Matrix")
 plt.tight_layout()
 plt.show()
+save_fig("correlation_heatmap")
+
 
 #gender based spending analysis
 plt.figure(figsize=(10,5))
@@ -119,6 +142,8 @@ sns.barplot(data=df, x="gender", y="total_expenses")
 plt.title("Total Expenses by Gender")
 plt.tight_layout()
 plt.show()
+save_fig("expenses_by_gender")
+
 
 #spending by year in scholl 
 plt.figure(figsize=(10,5))
@@ -126,6 +151,8 @@ sns.boxplot(data=df, x="year_in_school", y="total_expenses")
 plt.title("Expense Distribution by Year in School")
 plt.tight_layout()
 plt.show()
+save_fig("expenses_by_year")
+
 
 #spending by major 
 plt.figure(figsize=(12,6))
@@ -134,6 +161,8 @@ plt.title("Total Expenses by Major")
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
+save_fig("expenses_by_major")
+
 
 #savings distribution 
 plt.figure(figsize=(8,5))
@@ -141,3 +170,4 @@ sns.histplot(df['savings'], bins=20, kde=True)
 plt.title("Savings Distribution")
 plt.tight_layout()
 plt.show()
+save_fig("savings_distribution")
